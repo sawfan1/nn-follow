@@ -1,8 +1,10 @@
 # follow along for neural nine video https://www.youtube.com/watch?v=MSrfaI1gGjI
-
+import warnings
 import random
 import gym
 import numpy as np
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 env = gym.make('Taxi-v3')
 alpha = 0.9 # learning rate
@@ -25,6 +27,7 @@ def choose_action(state):
   else:
     return np.argmax(q_table[state])
   
+print("Training ...")
 for episode in range(num_episodes):
   state, _ = env.reset()
   done = False
@@ -60,4 +63,6 @@ for episode in range(5):
     if done or truncated:
       env.render()
       print("Finished episode", episode, 'with reward', reward)
-      
+      break
+
+env.close()
